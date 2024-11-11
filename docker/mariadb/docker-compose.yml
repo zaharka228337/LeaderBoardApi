@@ -1,0 +1,21 @@
+services:
+  mariadb:
+    image: mariadb:11.5.1-noble-rc
+    restart: always
+    environment:
+        - MARIADB_DATABASE=leader
+        - MARIADB_USER=db
+        - MARIADB_PASSWORD=password
+        - MARIADB_ROOT_PASSWORD=root
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./config:/etc/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - static-network
+networks:
+    static-network:
+        driver: bridge
+        external: true
+
