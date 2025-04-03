@@ -56,13 +56,11 @@ final class PointsLogRepository extends ModelRepository
      */
     public function rank(int $userID, PeriodEnum $period): int
     {
-        $rank = PointLog::selectRaw('user_id, SUM(points) AS total_points')
+        $rank = PointLog::selectRaw('RANK() OVER (ORDER BY SUM(points) DESC) AS user_rank')
             ->where('created_at', '>=', $period->datePeriod())
             ->groupBy('user_id')
-            ->orderByDesc('total_points')
-            ->get()
-            ->pluck('user_id')
-            ->search($userID);
+            ->having('user_id', '=', $userID)
+            ->value('user_rank');
 
         return $rank ? $rank + 1 : 0; // 0 - невозможно вычислить место пользователя, так как у него нет очков.
     }

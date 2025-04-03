@@ -31,6 +31,8 @@ return new class extends Migration
             $table->unsignedSmallInteger('points')
                 ->comment('Очки');
             $table->timestamps();
+
+            $table->index('created_at');
         });
     }
 

@@ -16,18 +16,19 @@ final class PointsLogSeeder extends Seeder
             ->each(static function ($user): void {
                 PointLog::factory()
                     ->for($user)
+                    ->count(10)
                     ->today()
                     ->create();
 
                 PointLog::factory()
                     ->for($user)
-                    ->count(7)
+                    ->count(25)
                     ->lastWeek()
                     ->create();
 
                 PointLog::factory()
                     ->for($user)
-                    ->count(23)
+                    ->count(120)
                     ->lastMonth()
                     ->create();
             });
